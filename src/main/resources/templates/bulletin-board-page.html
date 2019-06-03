@@ -21,6 +21,11 @@
 投稿ID：<span th:text="${article.id}"></span><br>
 投稿者名：<span th:text="${article.name}"></span><br>
 投稿内容：<span th:text="${article.content}"></span><br>
+<div th:each="comment : ${article.commentList}">
+	コメントID：<span th:text="${comment.id}"></span><br>
+	コメント者名：<span th:text="${comment.name}"></span><br>
+	コメント内容：<span th:text="${comment.content}"></span><br>
+</div>
 <hr>
 </div>
 

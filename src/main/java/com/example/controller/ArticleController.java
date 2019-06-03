@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Article;
-import com.example.domain.Comment;
 import com.example.form.ArticleForm;
 import com.example.repository.CommentService;
 import com.example.service.ArticleService;
