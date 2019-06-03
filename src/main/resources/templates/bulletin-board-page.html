@@ -9,8 +9,12 @@
 
 <h2>掲示板アプリケーション</h2>
 
-<form>
-
+<form th:action="@{/bulletin-board/post-an-article}" method="post" th:object="${articleForm}">
+	<label for="contributorNameField">投稿者名：</label>
+		<input id="contributorNameField" name="name" type="text" th:field="*{name}"><br>
+	<label for="contributorContentField">投稿内容：</label>
+		<input id="contributorContentField" name="content" type="text" th:field="*{content}"><br>
+	<button>記事投稿</button>
 </form>
 <div th:each="article:${articleList}">
 <hr>

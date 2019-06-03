@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,9 +50,19 @@ public class ArticleController {
 	
 	
 	
+	/**
+	 * 記事を投稿（追加）する.<br>
+	 * 追加後、掲示板ページに遷移する。
+	 * 
+	 * @param form 入力された記事
+	 * @param model モデル
+	 * @return 掲示板ページ
+	 */
 	@RequestMapping("/post-an-article")
 	public String postAnArticle(ArticleForm form, Model model) {
-		
+		Article article = new Article();
+		BeanUtils.copyProperties(form, article);
+		articleService.insert(article);
 		
 		return index(model);
 	}
