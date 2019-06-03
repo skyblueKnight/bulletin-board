@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Article;
+import com.example.domain.Comment;
 import com.example.form.ArticleForm;
+import com.example.repository.CommentService;
 import com.example.service.ArticleService;
 
 @Controller
@@ -19,6 +21,8 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private CommentService commentService;
 	
 	
 	/**
@@ -34,17 +38,22 @@ public class ArticleController {
 	
 	/**
 	 * 掲示板ページに遷移する.<br>
-	 * 記事一覧を取得する。
+	 * 記事一覧を取得したあと、コメント一覧を取得する。
 	 * 
 	 * @param model モデル
 	 * @return 掲示板ページ
 	 */
 	@RequestMapping("")
 	public String index(Model model) {
-		
+		/** 記事一覧を取得 */
 		List<Article> articleList = articleService.findAll();
-		model.addAttribute("articleList",articleList);
 		
+		/** コメント一覧を取得する */
+		for(Article article : articleList) {
+			article.setCommentList(commentService.findByArticleId(article.getId()));		
+		}
+		
+		model.addAttribute("articleList",articleList);
 		return "bulletin-board-page";
 	}
 	
