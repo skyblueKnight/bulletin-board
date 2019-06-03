@@ -48,4 +48,12 @@ public class ArticleController {
 	}
 	
 	
+	
+	@RequestMapping("/post-an-article")
+	public String postAnArticle(ArticleForm form) {
+		
+		
+		
+	}
+	
 }
