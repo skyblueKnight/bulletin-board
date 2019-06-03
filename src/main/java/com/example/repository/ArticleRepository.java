@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -25,6 +27,24 @@ public class ArticleRepository {
 		
 		return article;
 	};
+	
+	
+	
+	
+	/**
+	 * 全件検索を行う.
+	 * 
+	 * @return 取得した記事一覧
+	 */
+	public List<Article> findAll(){
+		
+		String sql="SELECT id, name, content FROM articles ORDER BY id;";
+		List<Article> articleList = template.query(sql, ARTICLE_ROW_MAPPER);
+		
+		return articleList;
+	}
+	
+	
 	
 	
 }
