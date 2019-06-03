@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel=“stylesheet” href=“style.css”>
+<title>掲示板アプリケーション</title>
+</head>
+<body>
+
+<h2>掲示板アプリケーション</h2>
+
+<form>
+
+</form>
+<div th:each="article:${articleList}">
+<hr>
+投稿ID：<span th:text="${article.id}"></span><br>
+投稿者名：<span th:text="${article.name}"></span><br>
+投稿内容：<span th:text="${article.content}"></span><br>
+<hr>
+</div>
+
+
+</body>
+</html>
