@@ -50,10 +50,10 @@ public class ArticleController {
 	
 	
 	@RequestMapping("/post-an-article")
-	public String postAnArticle(ArticleForm form) {
+	public String postAnArticle(ArticleForm form, Model model) {
 		
 		
-		
+		return index(model);
 	}
 	
 }

@@ -3,8 +3,6 @@ package com.example.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +41,16 @@ public class ArticleService {
 	 */
 	public void insert(Article article) {
 		repository.insert(article);
+	}
+	
+	/**
+	 * 主キー検索を行う.
+	 * 
+	 * @param id 検索するID
+	 * @return 取得した記事
+	 */
+	public Article load(int id) {		
+		return repository.load(id);
 	}
 	
 	
