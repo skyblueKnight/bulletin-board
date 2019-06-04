@@ -74,5 +74,19 @@ public class ArticleRepository {
 		
 		return article;
 	}
+	
+	
+	
+	/**
+	 * 指定されたIDの記事を消去する.
+	 * 
+	 * @param id 消去する記事のID
+	 */
+	public void deleteById(int id) {
+
+		String sql = "DELETE FROM atricles WHERE id=:id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(sql, param);
+	}
 
 }

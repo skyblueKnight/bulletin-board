@@ -19,20 +19,18 @@ import com.example.repository.ArticleRepository;
 @Transactional
 public class ArticleService {
 
-	@Autowired 
+	@Autowired
 	private ArticleRepository repository;
-	
-	
+
 	/**
 	 * 全件検索を行う.
 	 * 
 	 * @return 記事一覧
 	 */
-	public List<Article> findAll(){
+	public List<Article> findAll() {
 		return repository.findAll();
 	}
-	
-	
+
 	/**
 	 * 記事を追加する.
 	 * 
@@ -41,16 +39,24 @@ public class ArticleService {
 	public void insert(Article article) {
 		repository.insert(article);
 	}
-	
+
 	/**
 	 * 主キー検索を行う.
 	 * 
 	 * @param id 検索するID
 	 * @return 取得した記事
 	 */
-	public Article load(int id) {		
+	public Article load(int id) {
 		return repository.load(id);
 	}
-	
-	
+
+	/**
+	 * 指定されたIDの記事を消去する.
+	 * 
+	 * @param id 消去する記事のID
+	 */
+	public void deleteById(int id) {
+		repository.deleteById(id);
+	}
+
 }

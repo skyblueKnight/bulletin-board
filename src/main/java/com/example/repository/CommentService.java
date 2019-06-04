@@ -38,4 +38,13 @@ public class CommentService {
 		repository.insert(comment);
 	}
 
+	/**
+	 * 指定されたIDのコメントを消去する.
+	 * 
+	 * @param id 消去するコメントのID
+	 */
+	public void deleteById(int id) {
+		repository.deleteById(id);
+	}
+
 }
