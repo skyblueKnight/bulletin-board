@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -34,21 +35,55 @@ public class ArticleRepository {
 		article.setId(rs.getInt("id"));
 		article.setName(rs.getString("name"));
 		article.setContent(rs.getString("content"));
-	
-		List<Comment> commentList = new ArrayList<>();
-		int articleNumber = rs.getInt("id");
-		while(rs.getInt("id") == articleNumber) {
-			Comment comment = new Comment();
-			comment.setId(rs.getInt("com_id"));
-			comment.setName(rs.getString("com_name"));
-			comment.setContent(rs.getString("com_content"));
-			comment.setArticleId(rs.getInt("article_id")); 
-			commentList.add(comment);		
-			rs.next();
-		};
-		article.setCommentList(commentList);
 
 		return article;
+	};
+
+	/**
+	 * 記事ドメインのリストを返すResultSetExtractor. コメントリストも取得して返す。 記事テーブルとコメントテーブルの結合後に使用する。
+	 */
+	private final static ResultSetExtractor<List<Article>> ARTICLE_RS_EXTRACTOR = (rs) -> {
+
+		List<Article> articleList = new ArrayList<>();
+		/** 初めの一行に移動 && 次の行が存在するかのチェック変数を作成 */
+		boolean isCheck = rs.next();
+
+		while (isCheck) {
+			/** 記事情報の取得 */
+			Article article;
+			article = new Article();
+			article.setId(rs.getInt("id"));
+			article.setName(rs.getString("name"));
+			article.setContent(rs.getString("content"));
+
+			/** 記事にコメントがなければ、コメント一覧はnullを入れて次の行へ。*
+			 * コメントがあれば、違う記事のコメントになるまでコメントを取得する。
+			 * （違う記事の行になった場合は、それまでのコメント一覧をarticleに入れて
+			 * そのままループの先頭（記事情報の取得）へ）*/
+			List<Comment> commentList;
+			if (rs.getInt("com_id") == 0) {
+				commentList = null;
+				isCheck = rs.next();
+			} else {
+				commentList = new ArrayList<>();
+				while (rs.getInt("article_id") == article.getId()) {
+					Comment comment = new Comment();
+					comment.setId(rs.getInt("com_id"));
+					comment.setName(rs.getString("com_name"));
+					comment.setContent(rs.getString("com_content"));
+					comment.setArticleId(rs.getInt("article_id"));
+					commentList.add(comment);
+					isCheck = rs.next();
+					/** （次の行がなければ終了） */
+					if(isCheck==false) break;
+				}
+			}
+			article.setCommentList(commentList);
+			articleList.add(article);
+		}
+
+		return articleList;
+
 	};
 
 	/**
@@ -64,7 +99,7 @@ public class ArticleRepository {
 				+ " FROM articles a LEFT OUTER JOIN comments c ON (a.id = c.article_id)"
 				+ " ORDER BY a.id DESC,c.id DESC;";
 
-		List<Article> articleList = template.query(sql, ARTICLE_ROW_MAPPER);
+		List<Article> articleList = template.query(sql, ARTICLE_RS_EXTRACTOR);
 
 		return articleList;
 	}

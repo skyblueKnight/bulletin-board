@@ -13,8 +13,8 @@ import com.example.domain.Article;
 import com.example.domain.Comment;
 import com.example.form.ArticleForm;
 import com.example.form.CommentForm;
-import com.example.repository.CommentService;
 import com.example.service.ArticleService;
+import com.example.service.CommentService;
 
 @Controller
 @RequestMapping("/bulletin-board")
@@ -57,10 +57,10 @@ public class ArticleController {
 		/** 記事一覧を取得 */
 		List<Article> articleList = articleService.findAll();
 
-		/** コメント一覧を取得する */
-		for (Article article : articleList) {
-			article.setCommentList(commentService.findByArticleId(article.getId()));
-		}
+//		/** コメント一覧を取得する */
+//		for (Article article : articleList) {
+//			article.setCommentList(commentService.findByArticleId(article.getId()));
+//		}
 
 		model.addAttribute("articleList", articleList);
 		return "bulletin-board-page";

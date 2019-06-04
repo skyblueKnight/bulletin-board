@@ -1,8 +1,6 @@
 package com.example.form;
 
-import java.util.List;
-
-import com.example.domain.Comment;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 記事テーブル(articles)のフォーム.
@@ -15,11 +13,11 @@ public class ArticleForm {
 	/** ID */
 	private String id;
 	/** 投稿者名 */
+	@NotBlank
 	private String name;
 	/** 投稿内容 */
+	@NotBlank
 	private String content;
-	/** コメントリスト */
-	private List<Comment> commentList;
 	
 	
 	// ----- setter getter ----- //
@@ -45,13 +43,7 @@ public class ArticleForm {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public List<Comment> getCommentList() {
-		return commentList;
-	}
-	public void setCommentList(List<Comment> commentList) {
-		this.commentList = commentList;
-	}
-	
+
 	
 
 	
