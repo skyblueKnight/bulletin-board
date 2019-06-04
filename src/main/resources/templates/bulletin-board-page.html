@@ -9,7 +9,7 @@
 
 <h2>掲示板アプリケーション</h2>
 
-<form th:action="@{/bulletin-board/post-an-article}" method="post" th:object="${articleForm}">
+<form th:action="@{/bulletin-board/post-article}" method="post" th:object="${articleForm}">
 	<label for="contributorNameField">投稿者名：</label>
 		<input id="contributorNameField" name="name" type="text" th:field="*{name}"><br>
 	<label for="contributorContentField">投稿内容：</label>
@@ -26,7 +26,7 @@
 	コメント者名：<span th:text="${comment.name}"></span><br>
 	コメント内容：<span th:text="${comment.content}"></span><br>
 </div>
-<form th:action="@{/bulletin-board/post-a-comment}" method="post" th:object="${commentForm}">
+<form th:action="@{/bulletin-board/post-comment}" method="post" th:object="${commentForm}">
 	<input type="hidden" th:value="${article.id}" name ="articleId">
 	<label th:for="commentNameField+${article.id}">名前：</label>
 		<input th:id="commentNameField+${article.id}" name="name" type="text"><br>

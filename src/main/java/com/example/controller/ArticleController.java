@@ -74,8 +74,8 @@ public class ArticleController {
 	 * @param model モデル
 	 * @return 掲示板ページ
 	 */
-	@RequestMapping("/post-an-article")
-	public String postAnArticle(ArticleForm form, Model model) {
+	@RequestMapping("/post-article")
+	public String postArticle(ArticleForm form, Model model) {
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
 		articleService.insert(article);
@@ -91,8 +91,8 @@ public class ArticleController {
 	 * @param model モデル
 	 * @return 掲示板ページ
 	 */
-	@RequestMapping("/post-a-comment")
-	public String postAComment(CommentForm form, Model model) {
+	@RequestMapping("/post-comment")
+	public String postComment(CommentForm form, Model model) {
 		System.out.println(form.getArticleId());
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
@@ -101,5 +101,16 @@ public class ArticleController {
 
 		return index(model);
 	}
+	
+	
+	
+	@RequestMapping("/delete-article-and-comment")
+	public String DeleteArticleAndComment(int articleId) {
+		
+		
+	}
+	
+	
+	
 
 }
