@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Article;
+import com.example.domain.Comment;
 
 /**
  * 記事テーブル（articles）を操作するリポジトリ.
@@ -27,22 +29,41 @@ public class ArticleRepository {
 	 * 記事ドメインを返すRowMapper.
 	 */
 	private final static RowMapper<Article> ARTICLE_ROW_MAPPER = (rs, i) -> {
+
 		Article article = new Article();
 		article.setId(rs.getInt("id"));
 		article.setName(rs.getString("name"));
 		article.setContent(rs.getString("content"));
+	
+		List<Comment> commentList = new ArrayList<>();
+		int articleNumber = rs.getInt("id");
+		while(rs.getInt("id") == articleNumber) {
+			Comment comment = new Comment();
+			comment.setId(rs.getInt("com_id"));
+			comment.setName(rs.getString("com_name"));
+			comment.setContent(rs.getString("com_content"));
+			comment.setArticleId(rs.getInt("article_id")); 
+			commentList.add(comment);		
+			rs.next();
+		};
+		article.setCommentList(commentList);
 
 		return article;
 	};
 
 	/**
-	 * 全件検索を行う.
+	 * 全件検索を行う. 各記事のコメントも取得する。
 	 * 
 	 * @return 取得した記事一覧
 	 */
 	public List<Article> findAll() {
 
-		String sql = "SELECT id, name, content FROM articles ORDER BY id DESC;";
+		// String sql = "SELECT id, name, content FROM articles ORDER BY id DESC;";
+		String sql = "SELECT a.id, a.name, a.content, c.id AS com_id,"
+				+ " c.name AS com_name, c.content AS com_content, c.article_id"
+				+ " FROM articles a LEFT OUTER JOIN comments c ON (a.id = c.article_id)"
+				+ " ORDER BY a.id DESC,c.id DESC;";
+
 		List<Article> articleList = template.query(sql, ARTICLE_ROW_MAPPER);
 
 		return articleList;
@@ -85,12 +106,5 @@ public class ArticleRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		template.update(sql, param);
 	}
-	
-	
-	
-	
-	
-	
-	
 
 }
