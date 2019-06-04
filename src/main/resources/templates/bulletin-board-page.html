@@ -38,10 +38,12 @@
 	<input type="hidden" th:value="${article.id}" name ="articleId">
 	<span th:if="${#fields.hasErrors('name')} AND ${article.id} == *{articleId}" th:errors="*{name}" style="color:red">名前エラーメッセージ</span><br>
 	<label th:for="commentNameField+${article.id}">名前：</label>
-		<input th:id="commentNameField+${article.id}" name="name" type="text" ><br>
+		<input  th:if="${article.id} == *{articleId}" th:id="commentNameField+${article.id}" name="name" type="text" th:field="*{name}" >
+		<input th:unless="${article.id} == *{articleId}" th:id="commentNameField+${article.id}" name="name" type="text" ><br>
 	<span th:if="${#fields.hasErrors('content')} AND ${article.id} == *{articleId}" th:errors="*{content}" style="color:red">コメントエラーメッセージ</span><br>
 	<label th:for="'commentContentField'+${article.id}">コメント：</label>
-		<textarea th:id="'commentContentField'+${article.id}" name="content"></textarea><br>
+		<textarea  th:if="${article.id} == *{articleId}"  th:id="'commentContentField'+${article.id}" name="content" th:field="*{content}" ></textarea>
+		<textarea  th:unless="${article.id} == *{articleId}"  th:id="'commentContentField'+${article.id}" name="content"></textarea><br>
 	<button>コメント投稿</button>
 </form>
 
