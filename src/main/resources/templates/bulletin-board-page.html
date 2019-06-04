@@ -10,10 +10,10 @@
 <h2>掲示板アプリケーション</h2>
 
 <form th:action="@{/bulletin-board/post-article}" method="post" th:object="${articleForm}">
-	<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></span><br>
+	<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red">投稿者名エラーメッセージ</span><br>
 	<label for="contributorNameField">投稿者名：</label>
 		<input id="contributorNameField" name="name" type="text" th:field="*{name}"><br>
-	<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color:red"></span><br>
+	<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color:red">投稿内容エラーメッセージ</span><br>
 	<label for="contributorContentField">投稿内容：</label>
 		<textarea id="contributorContentField" name="content" th:field="*{content}"></textarea><br>
 	<button>記事投稿</button>
@@ -36,8 +36,10 @@
 </div>
 <form th:action="@{/bulletin-board/post-comment}" method="post" th:object="${commentForm}">
 	<input type="hidden" th:value="${article.id}" name ="articleId">
+	<span th:if="${#fields.hasErrors('name')} AND ${article.id} == *{articleId}" th:errors="*{name}" style="color:red">名前エラーメッセージ</span><br>
 	<label th:for="commentNameField+${article.id}">名前：</label>
-		<input th:id="commentNameField+${article.id}" name="name" type="text"><br>
+		<input th:id="commentNameField+${article.id}" name="name" type="text" ><br>
+	<span th:if="${#fields.hasErrors('content')} AND ${article.id} == *{articleId}" th:errors="*{content}" style="color:red">コメントエラーメッセージ</span><br>
 	<label th:for="'commentContentField'+${article.id}">コメント：</label>
 		<textarea th:id="'commentContentField'+${article.id}" name="content"></textarea><br>
 	<button>コメント投稿</button>

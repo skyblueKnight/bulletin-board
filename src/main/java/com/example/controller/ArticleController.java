@@ -97,7 +97,11 @@ public class ArticleController {
 	 * @return 掲示板ページ
 	 */
 	@RequestMapping("/post-comment")
-	public String postComment(CommentForm form, Model model) {
+	public String postComment(@Validated CommentForm form, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("errorId",form.getArticleId());
+			return index(model);			
+		}
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
 		commentService.insert(comment);

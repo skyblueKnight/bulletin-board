@@ -15,7 +15,7 @@ public class ArticleForm {
 	private String id;
 	/** 投稿者名 */
 	@NotBlank(message="投稿者名を入力してください")
-	@Size(max=50, message="名前は50字以内で⼊⼒してください")
+	@Size(max=50, message="投稿者名は50字以内で⼊⼒してください")
 	private String name;
 	/** 投稿内容 */
 	@NotBlank(message="投稿内容を入力してください")
