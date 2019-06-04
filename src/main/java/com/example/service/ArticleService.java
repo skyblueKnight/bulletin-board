@@ -29,7 +29,6 @@ public class ArticleService {
 	 * @return 記事一覧
 	 */
 	public List<Article> findAll(){
-		System.out.println("service");
 		return repository.findAll();
 	}
 	

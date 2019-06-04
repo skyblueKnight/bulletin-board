@@ -13,7 +13,7 @@
 	<label for="contributorNameField">投稿者名：</label>
 		<input id="contributorNameField" name="name" type="text" th:field="*{name}"><br>
 	<label for="contributorContentField">投稿内容：</label>
-		<input id="contributorContentField" name="content" type="text" th:field="*{content}"><br>
+		<textarea id="contributorContentField" name="content" th:field="*{content}"></textarea><br>
 	<button>記事投稿</button>
 </form>
 <div th:each="article:${articleList}">
@@ -26,9 +26,13 @@
 	コメント者名：<span th:text="${comment.name}"></span><br>
 	コメント内容：<span th:text="${comment.content}"></span><br>
 </div>
-<form>
-
-
+<form th:action="@{/bulletin-board/post-a-comment}" method="post" th:object="${commentForm}">
+	<input type="hidden" th:value="${article.id}" name ="articleId">
+	<label th:for="commentNameField+${article.id}">名前：</label>
+		<input th:id="commentNameField+${article.id}" name="name" type="text"><br>
+	<label th:for="'commentContentField'+${article.id}">コメント：</label>
+		<textarea th:id="'commentContentField'+${article.id}" name="content"></textarea><br>
+	<button>コメント投稿</button>
 </form>
 
 <hr>

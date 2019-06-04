@@ -93,8 +93,10 @@ public class ArticleController {
 	 */
 	@RequestMapping("/post-a-comment")
 	public String postAComment(CommentForm form, Model model) {
+		System.out.println(form.getArticleId());
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
+		System.out.println(comment.getArticleId());
 		commentService.insert(comment);
 
 		return index(model);
