@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -75,7 +77,10 @@ public class ArticleController {
 	 * @return 掲示板ページ
 	 */
 	@RequestMapping("/post-article")
-	public String postArticle(ArticleForm form, Model model) {
+	public String postArticle(@Validated ArticleForm form, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return index(model);			
+		}
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
 		articleService.insert(article);
