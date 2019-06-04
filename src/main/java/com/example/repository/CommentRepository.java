@@ -36,29 +36,22 @@ public class CommentRepository {
 		return comment;
 	};
 
-	
-	
 	/**
-	 * 記事IDからコメントを検索する.
-	 * コメントは新しいものが上に来るよう並び替える。
+	 * 記事IDからコメントを検索する. コメントは新しいものが上に来るよう並び替える。
 	 * 
 	 * @param articleId 検索する記事ID
 	 * @return コメント一覧
 	 */
 	public List<Comment> findByArticleId(int articleId) {
 
-		String sql = "SELECT id, name, content, article_id"
-				+ " FROM comments"
-				+ " WHERE article_id=:articleId"
+		String sql = "SELECT id, name, content, article_id" + " FROM comments" + " WHERE article_id=:articleId"
 				+ " ORDER BY id DESC;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
 		List<Comment> commentList = template.query(sql, param, COMMENT_ROW_MAPPER);
-		
+
 		return commentList;
 	}
-	
-	
-	
+
 	/**
 	 * 入力されたコメントを追加する.
 	 * 
