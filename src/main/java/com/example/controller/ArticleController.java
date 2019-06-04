@@ -101,16 +101,22 @@ public class ArticleController {
 
 		return index(model);
 	}
-	
-	
-	
+
+	/**
+	 * 指定されたIDの記事と、その記事のコメントを削除する.
+	 * 
+	 * @param articleId 指定された（削除する）記事ID
+	 * @param model     モデル
+	 * @return 掲示板ページ
+	 */
 	@RequestMapping("/delete-article-and-comment")
-	public String DeleteArticleAndComment(int articleId) {
-		
-		
+	public String DeleteArticleAndComment(int articleId, Model model) {
+		System.out.println("コメントを削除");
+		commentService.deleteByArticleId(articleId);
+		System.out.println("記事削除");
+		articleService.deleteById(articleId);
+
+		return index(model);
 	}
-	
-	
-	
 
 }

@@ -16,11 +16,17 @@
 		<textarea id="contributorContentField" name="content" th:field="*{content}"></textarea><br>
 	<button>記事投稿</button>
 </form>
+
 <div th:each="article:${articleList}">
 <hr>
 投稿ID：<span th:text="${article.id}"></span><br>
 投稿者名：<span th:text="${article.name}"></span><br>
 投稿内容：<span th:text="${article.content}"></span><br>
+<form th:action="@{/bulletin-board/delete-article-and-comment}" method="post">
+	<input type="hidden" th:value="${article.id}" name="articleId">
+	<button>記事削除</button>
+</form><br>
+
 <div th:each="comment : ${article.commentList}">
 	コメントID：<span th:text="${comment.id}"></span><br>
 	コメント者名：<span th:text="${comment.name}"></span><br>
