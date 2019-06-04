@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Article;
 import com.example.repository.ArticleRepository;
+import com.example.repository.CommentRepository;
 
 /**
  * 記事テーブル(articles)の操作を行うサービス.
@@ -20,7 +21,9 @@ import com.example.repository.ArticleRepository;
 public class ArticleService {
 
 	@Autowired
-	private ArticleRepository repository;
+	private ArticleRepository articleRepository;
+	@Autowired
+	private CommentRepository commentRepository;
 
 	/**
 	 * 全件検索を行う.
@@ -28,7 +31,7 @@ public class ArticleService {
 	 * @return 記事一覧
 	 */
 	public List<Article> findAll() {
-		return repository.findAll();
+		return articleRepository.findAll();
 	}
 
 	/**
@@ -37,7 +40,7 @@ public class ArticleService {
 	 * @param article 追加する記事
 	 */
 	public void insert(Article article) {
-		repository.insert(article);
+		articleRepository.insert(article);
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class ArticleService {
 	 * @return 取得した記事
 	 */
 	public Article load(int id) {
-		return repository.load(id);
+		return articleRepository.load(id);
 	}
 
 	/**
@@ -55,8 +58,9 @@ public class ArticleService {
 	 * 
 	 * @param id 消去する記事のID
 	 */
-	public void deleteById(int id) {
-		repository.deleteById(id);
+	public void deleteArticleAndComment(int id) {
+		commentRepository.deleteByArticleId(id);
+		articleRepository.deleteById(id);
 	}
 
 }

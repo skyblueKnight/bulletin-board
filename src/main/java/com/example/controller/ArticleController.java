@@ -111,10 +111,7 @@ public class ArticleController {
 	 */
 	@RequestMapping("/delete-article-and-comment")
 	public String DeleteArticleAndComment(int articleId, Model model) {
-		System.out.println("コメントを削除");
-		commentService.deleteByArticleId(articleId);
-		System.out.println("記事削除");
-		articleService.deleteById(articleId);
+		articleService.deleteArticleAndComment(articleId);
 
 		return index(model);
 	}

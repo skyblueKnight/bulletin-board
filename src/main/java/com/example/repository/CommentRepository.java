@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Comment;
 
@@ -18,6 +19,7 @@ import com.example.domain.Comment;
  * @author momoyo kanie
  *
  */
+@Transactional
 @Repository
 public class CommentRepository {
 

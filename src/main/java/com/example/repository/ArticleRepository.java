@@ -59,8 +59,7 @@ public class ArticleRepository {
 				article.getContent());
 		template.update(sql, param);
 	}
-	
-	
+
 	/**
 	 * 主キー検索を行う.
 	 * 
@@ -68,15 +67,13 @@ public class ArticleRepository {
 	 * @return 取得した記事
 	 */
 	public Article load(int id) {
-		String sql ="SELECT id, name, content FROM articles WHERE id=:id;";
+		String sql = "SELECT id, name, content FROM articles WHERE id=:id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		Article article = template.queryForObject(sql, param, ARTICLE_ROW_MAPPER);
-		
+
 		return article;
 	}
-	
-	
-	
+
 	/**
 	 * 指定されたIDの記事を消去する.
 	 * 
@@ -88,5 +85,12 @@ public class ArticleRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		template.update(sql, param);
 	}
+	
+	
+	
+	
+	
+	
+	
 
 }
